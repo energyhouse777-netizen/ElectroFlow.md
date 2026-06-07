@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELECTROFLOW — Монтаж электрических систем</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #161616;
+    --border: #252525;
+    --yellow: #f5c518;
+    --yellow-dim: rgba(245, 197, 24, 0.12);
+    --white: #f0ede6;
+    --gray: #888;
+    --light: #c8c4bc;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5vw;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-bolt { width: 28px; height: 28px; background: var(--yellow); clip-path: polygon(55% 0, 100% 0, 45% 48%, 85% 48%, 15% 100%, 30% 56%, 0 56%); flex-shrink: 0; }
+  .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; color: var(--white); }
+  .logo-text span { color: var(--yellow); }
+
+  nav { display: flex; gap: 32px; }
+  nav a { text-decoration: none; color: var(--gray); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  nav a:hover { color: var(--yellow); }
+
+  .header-cta { background: var(--yellow); color: var(--black); border: none; padding: 10px 22px; font-family: 'Manrope', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
+  .header-cta:hover { background: #ffd53d; transform: translateY(-1px); }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 72px 5vw 0; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 80% 50%, rgba(245,197,24,0.07) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 10% 80%, rgba(245,197,24,0.04) 0%, transparent 60%); }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 70% at 80% 50%, black 0%, transparent 70%); opacity: 0.4; }
+
+  .hero-content { position: relative; max-width: 720px; animation: fadeUp 0.9s ease both; }
+
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--yellow-dim); border: 1px solid rgba(245,197,24,0.25); color: var(--yellow); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; margin-bottom: 32px; }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: pulse 2s infinite; }
+
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 28px; }
+  h1 .accent { color: var(--yellow); }
+
+  .hero-sub { font-size: 1.05rem; color: var(--light); max-width: 520px; margin-bottom: 48px; font-weight: 300; line-height: 1.7; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary { background: var(--yellow); color: var(--black); text-decoration: none; padding: 16px 36px; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; display: inline-block; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: #ffd53d; transform: translateY(-2px); }
+
+  .btn-secondary { background: transparent; color: var(--white); text-decoration: none; padding: 15px 36px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border); display: inline-block; transition: border-color 0.2s, color 0.2s; }
+  .btn-secondary:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  .hero-stats { position: absolute; right: 5vw; bottom: 10vh; display: flex; flex-direction: column; gap: 32px; }
+  .stat-item { text-align: right; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--yellow); letter-spacing: 0.04em; line-height: 1; }
+  .stat-label { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; }
+
+  section { padding: 100px 5vw; }
+  .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--yellow); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
+  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--yellow); }
+
+  h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: 0.03em; line-height: 1; margin-bottom: 16px; }
+  .section-desc { color: var(--gray); font-size: 0.95rem; font-weight: 300; max-width: 500px; margin-bottom: 60px; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .service-card { background: var(--card); padding: 36px 32px; position: relative; overflow: hidden; transition: background 0.3s; cursor: default; }
+  .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; height: 2px; width: 0; background: var(--yellow); transition: width 0.35s ease; }
+  .service-card:hover { background: #1a1a1a; }
+  .service-card:hover::after { width: 100%; }
+  .service-icon { font-size: 2rem; margin-bottom: 20px; display: block; }
+  .service-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.05em; margin-bottom: 10px; color: var(--white); }
+  .service-desc { color: var(--gray); font-size: 0.85rem; line-height: 1.65; font-weight: 300; }
+
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .why-list { display: flex; flex-direction: column; gap: 0; }
+  .why-item { display: flex; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .why-item:first-child { border-top: 1px solid var(--border); }
+  .why-num { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--yellow); letter-spacing: 0.08em; flex-shrink: 0; margin-top: 2px; }
+  .why-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; color: var(--white); }
+  .why-desc { color: var(--gray); font-size: 0.82rem; font-weight: 300; line-height: 1.6; }
+
+  .why-visual { position: relative; height: 420px; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .why-visual-inner { position: relative; z-index: 2; text-align: center; }
+  .big-bolt { font-size: 8rem; line-height: 1; filter: drop-shadow(0 0 40px rgba(245,197,24,0.5)); animation: glow 3s ease-in-out infinite; }
+  .why-visual-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.2em; color: var(--yellow); margin-top: 16px; }
+  .why-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(245,197,24,0.08) 0%, transparent 70%); }
+
+  .process { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-top: 60px; }
+  .step { background: var(--black); padding: 40px 28px; position: relative; }
+  .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--yellow-dim); line-height: 1; margin-bottom: 20px; transition: color 0.3s; }
+  .step:hover .step-num { color: rgba(245,197,24,0.25); }
+  .step-title { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; color: var(--white); }
+  .step-desc { color: var(--gray); font-size: 0.82rem; font-weight: 300; line-height: 1.6; }
+
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .contact-item { display: flex; flex-direction: column; gap: 4px; }
+  .contact-label { font-size: 0.68rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; }
+  .contact-value { font-size: 1.15rem; font-weight: 600; color: var(--white); text-decoration: none; transition: color 0.2s; }
+  .contact-value:hover { color: var(--yellow); }
+  .contact-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+  .btn-call { background: var(--yellow); color: var(--black); text-decoration: none; padding: 14px 28px; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; display: inline-block; }
+  .btn-call:hover { background: #ffd53d; }
+  .btn-wa { background: transparent; color: #25d366; text-decoration: none; padding: 13px 28px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid #25d366; display: inline-block; transition: background 0.2s, color 0.2s; }
+  .btn-wa:hover { background: #25d366; color: var(--black); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  input, textarea { background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 14px 18px; font-family: 'Manrope', sans-serif; font-size: 0.88rem; font-weight: 400; outline: none; width: 100%; transition: border-color 0.2s; }
+  input::placeholder, textarea::placeholder { color: var(--gray); }
+  input:focus, textarea:focus { border-color: var(--yellow); }
+  textarea { resize: vertical; min-height: 110px; }
+  .btn-submit { background: var(--yellow); color: var(--black); border: none; padding: 16px; font-family: 'Manrope', sans-serif; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; width: 100%; }
+  .btn-submit:hover { background: #ffd53d; }
+
+  footer { padding: 40px 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-copy { font-size: 0.75rem; color: var(--gray); font-weight: 300; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 0.72rem; color: var(--gray); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--yellow); }
+
+  .reveal-element { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+  .reveal-element.active { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 30px rgba(245,197,24,0.4)); } 50% { filter: drop-shadow(0 0 60px rgba(245,197,24,0.8)); } }
+
+  @media (max-width: 900px) { nav { display: none; } .hero-stats { display: none; } .why-grid { grid-template-columns: 1fr; } .why-visual { height: 260px; } .process-steps { grid-template-columns: 1fr 1fr; } .contact-wrap { grid-template-columns: 1fr; gap: 48px; } }
+  @media (max-width: 580px) { .process-steps { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } h1 { font-size: 3rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <div class="logo-bolt"></div>
+    <div class="logo-text">ELECTRO<span>FLOW</span></div>
+  </a>
+  <nav>
+    <a href="#services">Услуги</a>
+    <a href="#why">О нас</a>
+    <a href="#process">Как работаем</a>
+    <a href="#contact">Контакты</a>
+  </nav>
+  <a href="#contact" class="header-cta">Получить консультацию</a>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Профессиональный монтаж</div>
+    <h1>МОНТАЖ<br><span class="accent">ЭЛЕКТРО-</span><br>СИСТЕМ</h1>
+    <p class="hero-sub">Проектирование, высокоточный монтаж и обслуживание распределительных систем. Работаем строго по ПУЭ и ГОСТ с жилыми и коммерческими объектами.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Оставить заявку</a>
+      <a href="#services" class="btn-secondary">Наши услуги</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Надежность щитов</div></div>
+    <div class="stat-item"><div class="stat-num">2 года</div><div class="stat-label">Письменной гарантии</div></div>
+    <div class="stat-item"><div class="stat-num">0%</div><div class="stat-label">Скрытых переплат</div></div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-label">Услуги</div>
+  <h2>ЧТО МЫ ДЕЛАЕМ</h2>
+  <p class="section-desc">Полный спектр высокоточных электромонтажных работ — от проекта до маркировки и пусконаладки.</p>
+  <div class="services-grid">
+    <div class="service-card reveal-element"><span class="service-icon">⚡</span><div class="service-title">Электромонтаж под ключ</div><p class="service-desc">Комплексная разводка силовых линий в квартирах и домах. Штробление без пыли, профессиональный крепеж и прокладка кабеля.</p></div>
+    <div class="service-card reveal-element"><span class="service-icon">🔌</span><div class="service-title">Сборка распределительных щитов</div><p class="service-desc">Профессиональный расчет, сборка и коммутация щитов любой сложности. Установка УЗО, дифференциальных автоматов и мастер-контакторов.</p></div>
+    <div class="service-card reveal-element"><span class="service-icon">💡</span><div class="service-title">Освещение и автоматизация контроля</div><p class="service-desc">Монтаж современных систем светодиодных лент, профилей, диммеров, астрономических таймеров и мастер-выключателей для управления светом.</p></div>
+    <div class="service-card reveal-element"><span class="service-icon">🏭</span><div class="service-title">Коммерческий электромонтаж</div><p class="service-desc">Электроснабжение офисов, торговых площадей и складов. Монтаж кабельных лотков, силовых розеток и оборудования под расчетные нагрузки.</p></div>
+    <div class="service-card reveal-element"><span class="service-icon">🛡️</span><div class="service-title">Контуры заземления и защиты</div><p class="service-desc">Монтаж надежного модульно-штыревого заземления, молниезащиты и систем уравнивания потенциалов для безопасности вашей техники.</p></div>
+    <div class="service-card reveal-element"><span class="service-icon">🔋</span><div class="service-title">Резервное питание и АВР</div><p class="service-desc">Интеграция источников бесперебойного питания (ИБП) и генераторов. Настройка блоков автоматического ввода резерва.</p></div>
+  </div>
+</section>
+
+<section id="why" style="background: var(--dark); border-top: 1px solid var(--border);">
+  <div class="section-label">Почему мы</div>
+  <h2>РАБОТАЕМ<br>ЧЕСТНО</h2>
+  <div class="why-grid">
+    <div class="why-list">
+      <div class="why-item reveal-element"><div class="why-num">01</div><div><div class="why-title">Инженерный подход и допуски</div><div class="why-desc">Высокая квалификация, подтвержденные группы допуска по электробезопасности и соблюдение строительных регламентов.</div></div></div>
+      <div class="why-item reveal-element"><div class="why-num">02</div><div><div class="why-title">Качественная комплектация</div><div class="why-desc">Используем только ГОСТ-кабель (ВВГнг-LS) и оригинальную модульную автоматику от надежных брендов с гарантией.</div></div></div>
+      <div class="why-item reveal-element"><div class="why-num">03</div><div><div class="why-title">Жесткая фиксированная смета</div><div class="why-desc">Финальная стоимость фиксируется в договоре до начала работ. Никаких внезапных расходов и доплат в процессе.</div></div></div>
+      <div class="why-item reveal-element"><div class="why-num">04</div><div><div class="why-title">Официальная гарантия 2 года</div><div class="why-desc">Мы несем полную юридическую и материальную ответственность за стабильность и безопасность смонтированных систем.</div></div></div>
+    </div>
+    <div class="why-visual">
+      <div class="why-visual-inner">
+        <div class="big-bolt">⚡</div>
+        <div class="why-visual-label">ELECTROFLOW — ваш ток под контролем</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="process">
+  <div class="section-label">Процесс</div>
+  <h2>КАК МЫ<br>РАБОТАЕМ</h2>
+  <div class="process-steps">
+    <div class="step reveal-element"><div class="step-num">01</div><div class="step-title">Замер и ТЗ</div><p class="step-desc">Выезд на объект, детальный осмотр, составление технического задания с учетом расстановки мебели и оборудования.</p></div>
+    <div class="step reveal-element"><div class="step-num">02</div><div class="step-title">Расчет и Договор</div><p class="step-desc">Разработка точной схемы, подбор материалов, формирование прозрачной сметы и подписание официального договора.</p></div>
+    <div class="step reveal-element"><div class="step-num">03</div><div class="step-title">Чистый монтаж</div><p class="step-desc">Выполнение работ профессиональным инструментом строго по лазерным осям с соблюдением ПУЭ.</p></div>
+    <div class="step reveal-element"><div class="step-num">04</div><div class="step-title">Тесты и Сдача</div><p class="step-desc">Проверка линий под нагрузкой, замеры сопротивления изоляции, маркировка щита, подписание акта выполненных работ.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label">Контакты</div>
+  <h2>СВЯЗАТЬСЯ<br>С НАМИ</h2>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <p style="color: var(--light); font-weight: 300; font-size: 0.95rem; line-height: 1.7; max-width: 420px;">Готовы обсудить ваш проект? Позвоните или напишите нам — предоставим грамотную инженерную консультацию и согласуем время выезда на замер.</p>
+      <div class="contact-item reveal-element"><span class="contact-label">Телефон</span><a href="tel:+37379892172" class="contact-value">+373 (79) 892-172</a></div>
+      <div class="contact-item reveal-element"><span class="contact-label">Email</span><a href="mailto:energyhouse777@gmail.com" class="contact-value">energyhouse777@gmail.com</a></div>
+      <div class="contact-item reveal-element"><span class="contact-label">Режим работы</span><span class="contact-value" style="cursor:default">Пн–Пт: 8:00 – 19:00</span></div>
+      <div class="contact-buttons">
+        <a href="tel:+37379892172" class="btn-call">📞 Позвонить</a>
+        <a href="https://wa.me/37379892172" target="_blank" class="btn-wa">WhatsApp</a>
+      </div>
+    </div>
+    <form class="contact-form" action="#" method="POST" id="main-form">
+      <div class="form-row">
+        <input type="text" name="username" placeholder="Ваше имя" required>
+        <input type="tel" name="phone" placeholder="Номер телефона" required>
+      </div>
+      <input type="text" name="object_type" placeholder="Тип объекта (квартира, дом, офис…)">
+      <textarea name="message" placeholder="Опишите задачу кратко (объем работ, особенности)…"></textarea>
+      <button type="submit" class="btn-submit">Отправить заявку →</button>
+      <p style="font-size: 0.72rem; color: var(--gray); font-weight: 300;">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Свяжемся с вами в течение часа в рабочее время.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="logo"><div class="logo-bolt"></div><div class="logo-text">ELECTRO<span>FLOW</span></div></div>
+  <div class="footer-copy">© 2026 ELECTROFLOW. Высокоточный электромонтаж систем.</div>
+  <div class="footer-links"><a href="#services">Услуги</a><a href="#contact">Контакты</a></div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+
+  document.getElementById('main-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const btn = this.querySelector('.btn-submit');
+    btn.textContent = '✓ Заявка отправлена!';
+    btn.style.background = '#2ecc71';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Отправить заявку →'; btn.style.background = ''; btn.disabled = false; this.reset(); }, 3000);
+  });
+</script>
+</body>
+</html>
